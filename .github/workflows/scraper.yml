@@ -30,21 +30,22 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-go-
 
-      - name: Download Go dependencies
-        run: |
-          go mod tidy || { echo "go mod tidy failed"; exit 1; }
-          go mod download || { echo "go mod download failed"; exit 1; }
-
-      - name: Run scraper
-        run: |
-          go run ./cmd/main.go || { echo "go run failed"; exit 1; }
-
       - name: Set up GitHub credentials
         run: |
           git config --global --add safe.directory "$GITHUB_WORKSPACE"
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git
+
+      - name: Download Go dependencies
+        run: |
+          git pull --rebase || { echo "git pull failed"; exit 1; }
+          go mod tidy || { echo "go mod tidy failed"; exit 1; }
+          go mod download || { echo "go mod download failed"; exit 1; }
+
+      - name: Run scraper
+        run: |
+          go run ./cmd/main.go || { echo "go run failed"; exit 1; }
 
       - name: Commit CSV results
         run: |
