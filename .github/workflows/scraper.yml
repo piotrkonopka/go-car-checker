@@ -21,7 +21,7 @@ jobs:
           go-version-file: 'go.mod'
 
       - name: Cache Go modules
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: |
             ~/.cache/go-build
@@ -49,10 +49,8 @@ jobs:
       - name: Commit CSV results
         run: |
           if ls data/*.csv 1> /dev/null 2>&1; then
-            git fetch origin
             git add data/*.csv
             git commit -m "📊 Daily data update - $(date +%F)" || echo "No changes to commit"
-            git pull --rebase origin ${{ github.ref_name }} || echo "Nothing to rebase"
             git push || echo "Nothing to push"
           else
             echo "No CSV files to add"
