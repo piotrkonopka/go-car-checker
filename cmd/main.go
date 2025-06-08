@@ -249,7 +249,7 @@ func scanURL(url string, brand string) {
 	}
 	fmt.Println("✅ Zakończono skanowanie:", brand)
 	fmt.Println("Zapisuję wyniki do pliku CSV...")
-	// saveCSV(brand, segments)
+	saveCSV(brand, segments)
 	fmt.Println("--------------------------------------------------")
 }
 
