@@ -2,7 +2,7 @@ name: Daily Plots
 
 on:
   schedule:
-    - cron: '15 6 * * *' # everyday 6:15 UTC
+    - cron: '15 5 * * *' # everyday 5:15 UTC
   workflow_dispatch:
 
 jobs:
